@@ -8,13 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf();
     $id = (int)($_POST['id'] ?? 0); $status = $_POST['status'] ?? '';
     if (isset($estados[$status])) {
-        $st = $pdo->prepare('UPDATE mentorship_bookings SET status=? WHERE id=? AND service_id IN (SELECT id FROM mentorship_services WHERE mentor_id=?)');
+        $st = $pdo->prepare('UPDATE marcacao_mentoria SET status=? WHERE id=? AND service_id IN (SELECT id FROM servico_mentoria WHERE mentor_id=?)');
         $st->execute([$status, $id, $uid]);
         flash('Estado do pedido actualizado.');
     }
     header('Location: mentor_pedidos.php'); exit;
 }
-$st = $pdo->prepare('SELECT b.id,b.status,b.session_date,b.message,u.name AS aluno,u.email,u.phone,m.title FROM mentorship_bookings b JOIN mentorship_services m ON m.id=b.service_id JOIN users u ON u.id=b.student_id WHERE m.mentor_id=? ORDER BY b.session_date DESC');
+$st = $pdo->prepare('SELECT b.id,b.status,b.session_date,b.message,u.name AS aluno,u.email,u.phone,m.title FROM marcacao_mentoria b JOIN servico_mentoria m ON m.id=b.service_id JOIN users u ON u.id=b.student_id WHERE m.mentor_id=? ORDER BY b.session_date DESC');
 $st->execute([$uid]);
 $lista = $st->fetchAll();
 $page_title = 'Pedidos recebidos | Mentor';

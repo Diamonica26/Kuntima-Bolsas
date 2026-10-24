@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else {
             $st = $pdo->prepare("UPDATE users SET account_status=? WHERE id=? AND role='mentor'");
             $st->execute([$decisao, $id]);
-            if ($decisao === 'rejected') $pdo->prepare("UPDATE mentorship_services SET status='draft' WHERE mentor_id=?")->execute([$id]);
+            if ($decisao === 'rejected') $pdo->prepare("UPDATE servico_mentoria SET status='draft' WHERE mentor_id=?")->execute([$id]);
             flash($decisao === 'approved' ? 'Mentor aprovado. Já pode entrar e gerir os seus serviços.' : 'Mentor rejeitado. Os serviços dele deixaram de estar publicados.');
         }
     } else {

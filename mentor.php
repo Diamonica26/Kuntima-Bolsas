@@ -3,9 +3,9 @@ require_once 'config.php'; require_once 'includes/perfis.php';
 require_mentor();
 $pdo = db(); $uid = (int)$_SESSION['user']['id'];
 $q = function (string $sql) use ($pdo, $uid) { $st = $pdo->prepare($sql); $st->execute([$uid]); return $st->fetchColumn(); };
-$servicos = $q("SELECT COUNT(*) FROM mentorship_services WHERE mentor_id=?");
-$pendentes = $q("SELECT COUNT(*) FROM mentorship_bookings b JOIN mentorship_services m ON m.id=b.service_id WHERE m.mentor_id=? AND b.status='requested'");
-$confirmadas = $q("SELECT COUNT(*) FROM mentorship_bookings b JOIN mentorship_services m ON m.id=b.service_id WHERE m.mentor_id=? AND b.status='confirmed'");
+$servicos = $q("SELECT COUNT(*) FROM servico_mentoria WHERE mentor_id=?");
+$pendentes = $q("SELECT COUNT(*) FROM marcacao_mentoria b JOIN servico_mentoria m ON m.id=b.service_id WHERE m.mentor_id=? AND b.status='requested'");
+$confirmadas = $q("SELECT COUNT(*) FROM marcacao_mentoria b JOIN servico_mentoria m ON m.id=b.service_id WHERE m.mentor_id=? AND b.status='confirmed'");
 $page_title = 'Painel do mentor | Kuntima';
 require 'includes/header.php'; ?>
 <div class="page-heading"><span class="eyebrow" style="color:var(--green)">Área do mentor</span><h1>Olá, <?=e(explode(' ', $_SESSION['user']['name'])[0])?></h1><p>Gere os teus serviços e os pedidos dos estudantes.</p></div>

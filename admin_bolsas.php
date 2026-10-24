@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = $_POST['acao'] ?? '';
     $id = (int)($_POST['id'] ?? 0);
     if ($acao === 'estado' && isset($estados[$_POST['status'] ?? ''])) {
-        $pdo->prepare('UPDATE scholarships SET status=? WHERE id=?')->execute([$_POST['status'], $id]);
+        $pdo->prepare('UPDATE bolsa SET status=? WHERE id=?')->execute([$_POST['status'], $id]);
         flash('Estado da bolsa actualizado.');
         header('Location: admin_bolsas.php'); exit;
     }
@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $args = [$d['title'], $d['organization'], $d['country'], $d['study_level'], $d['field'], $d['funding_type'], $d['deadline'] ?: null, $d['description'], $d['requirements'] ?: null, $d['application_url'] ?: null, $d['status']];
             if ($id > 0) {
                 $args[] = $id;
-                $pdo->prepare('UPDATE scholarships SET title=?,organization=?,country=?,study_level=?,field=?,funding_type=?,deadline=?,description=?,requirements=?,application_url=?,status=? WHERE id=?')->execute($args);
+                $pdo->prepare('UPDATE bolsa SET title=?,organization=?,country=?,study_level=?,field=?,funding_type=?,deadline=?,description=?,requirements=?,application_url=?,status=? WHERE id=?')->execute($args);
                 flash('Bolsa actualizada.');
             } else {
-                $pdo->prepare('INSERT INTO scholarships(title,organization,country,study_level,field,funding_type,deadline,description,requirements,application_url,status) VALUES(?,?,?,?,?,?,?,?,?,?,?)')->execute($args);
+                $pdo->prepare('INSERT INTO bolsa(title,organization,country,study_level,field,funding_type,deadline,description,requirements,application_url,status) VALUES(?,?,?,?,?,?,?,?,?,?,?)')->execute($args);
                 flash('Bolsa criada.');
             }
             header('Location: admin_bolsas.php'); exit;
@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (!isset($form)) {
     $form = ['status' => 'published', 'funding_type' => 'Integral', 'country' => 'Angola'];
     if (isset($_GET['editar'])) {
-        $st = $pdo->prepare('SELECT * FROM scholarships WHERE id=?'); $st->execute([(int)$_GET['editar']]);
+        $st = $pdo->prepare('SELECT * FROM bolsa WHERE id=?'); $st->execute([(int)$_GET['editar']]);
         $form = $st->fetch() ?: $form;
     }
 }
-$lista = $pdo->query('SELECT id,title,organization,deadline,status FROM scholarships ORDER BY created_at DESC')->fetchAll();
+$lista = $pdo->query('SELECT id,title,organization,deadline,status FROM bolsa ORDER BY created_at DESC')->fetchAll();
 $page_title = 'Bolsas | Administração';
 require 'includes/header.php'; ?>
 <div class="page-heading"><span class="eyebrow" style="color:var(--green)">Administração</span><h1>Bolsas de estudo</h1><p>Publica novas oportunidades e controla o que fica visível para os estudantes.</p></div>

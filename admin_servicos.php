@@ -15,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $args = [$mid ?: null, $d['title'], $d['category'], $d['description'], $d['price'], $d['duration_minutes'], $d['delivery'], $d['status']];
         if ($id > 0) {
             $args[] = $id;
-            $pdo->prepare('UPDATE mentorship_services SET mentor_id=?,title=?,category=?,description=?,price=?,duration_minutes=?,delivery=?,status=? WHERE id=?')->execute($args);
+            $pdo->prepare('UPDATE servico_mentoria SET mentor_id=?,title=?,category=?,description=?,price=?,duration_minutes=?,delivery=?,status=? WHERE id=?')->execute($args);
             flash('Serviço actualizado.');
         } else {
-            $pdo->prepare('INSERT INTO mentorship_services(mentor_id,title,category,description,price,duration_minutes,delivery,status) VALUES(?,?,?,?,?,?,?,?)')->execute($args);
+            $pdo->prepare('INSERT INTO servico_mentoria(mentor_id,title,category,description,price,duration_minutes,delivery,status) VALUES(?,?,?,?,?,?,?,?)')->execute($args);
             flash('Serviço criado.');
         }
         header('Location: admin_servicos.php'); exit;
@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (!isset($form)) {
     $form = ['status' => 'published', 'delivery' => 'Online', 'duration_minutes' => 60];
     if (isset($_GET['editar'])) {
-        $st = $pdo->prepare('SELECT * FROM mentorship_services WHERE id=?'); $st->execute([(int)$_GET['editar']]);
+        $st = $pdo->prepare('SELECT * FROM servico_mentoria WHERE id=?'); $st->execute([(int)$_GET['editar']]);
         $form = $st->fetch() ?: $form;
     }
 }
-$lista = $pdo->query('SELECT m.*,u.name AS mentor FROM mentorship_services m LEFT JOIN users u ON u.id=m.mentor_id ORDER BY m.created_at DESC')->fetchAll();
+$lista = $pdo->query('SELECT m.*,u.name AS mentor FROM servico_mentoria m LEFT JOIN users u ON u.id=m.mentor_id ORDER BY m.created_at DESC')->fetchAll();
 $page_title = 'Serviços de mentoria | Administração';
 require 'includes/header.php'; ?>
 <div class="page-heading"><span class="eyebrow" style="color:var(--green)">Administração</span><h1>Serviços de mentoria</h1><p>Cria serviços e atribui-os a mentores. Um serviço sem mentor fica à responsabilidade da equipa.</p></div>

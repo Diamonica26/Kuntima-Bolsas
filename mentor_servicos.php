@@ -9,11 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     [$d, $erro] = servico_ler_post();
     if ($erro === '') {
         if ($id > 0) {
-            $st = $pdo->prepare('UPDATE mentorship_services SET title=?,category=?,description=?,price=?,duration_minutes=?,delivery=?,status=? WHERE id=? AND mentor_id=?');
+            $st = $pdo->prepare('UPDATE servico_mentoria SET title=?,category=?,description=?,price=?,duration_minutes=?,delivery=?,status=? WHERE id=? AND mentor_id=?');
             $st->execute([$d['title'], $d['category'], $d['description'], $d['price'], $d['duration_minutes'], $d['delivery'], $d['status'], $id, $uid]);
             flash('Serviço actualizado.');
         } else {
-            $pdo->prepare('INSERT INTO mentorship_services(mentor_id,title,category,description,price,duration_minutes,delivery,status) VALUES(?,?,?,?,?,?,?,?)')
+            $pdo->prepare('INSERT INTO servico_mentoria(mentor_id,title,category,description,price,duration_minutes,delivery,status) VALUES(?,?,?,?,?,?,?,?)')
                 ->execute([$uid, $d['title'], $d['category'], $d['description'], $d['price'], $d['duration_minutes'], $d['delivery'], $d['status']]);
             flash('Serviço criado.');
         }
@@ -24,11 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (!isset($form)) {
     $form = ['status' => 'published', 'delivery' => 'Online', 'duration_minutes' => 60];
     if (isset($_GET['editar'])) {
-        $st = $pdo->prepare('SELECT * FROM mentorship_services WHERE id=? AND mentor_id=?'); $st->execute([(int)$_GET['editar'], $uid]);
+        $st = $pdo->prepare('SELECT * FROM servico_mentoria WHERE id=? AND mentor_id=?'); $st->execute([(int)$_GET['editar'], $uid]);
         $form = $st->fetch() ?: $form;
     }
 }
-$st = $pdo->prepare('SELECT * FROM mentorship_services WHERE mentor_id=? ORDER BY created_at DESC'); $st->execute([$uid]);
+$st = $pdo->prepare('SELECT * FROM servico_mentoria WHERE mentor_id=? ORDER BY created_at DESC'); $st->execute([$uid]);
 $lista = $st->fetchAll();
 $page_title = 'Os meus serviços | Mentor';
 require 'includes/header.php'; ?>

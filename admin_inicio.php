@@ -3,10 +3,10 @@ require_once 'config.php'; require_once 'includes/perfis.php';
 require_admin();
 $pdo = db();
 $n = [
-    'pend' => $pdo->query("SELECT COUNT(*) FROM applications WHERE status IN ('submitted','reviewing')")->fetchColumn(),
-    'ped' => $pdo->query("SELECT COUNT(*) FROM mentorship_bookings WHERE status='requested'")->fetchColumn(),
-    'bolsas' => $pdo->query("SELECT COUNT(*) FROM scholarships WHERE status='published'")->fetchColumn(),
-    'serv' => $pdo->query("SELECT COUNT(*) FROM mentorship_services WHERE status='published'")->fetchColumn(),
+    'pend' => $pdo->query("SELECT COUNT(*) FROM candidatura WHERE status IN ('submitted','reviewing')")->fetchColumn(),
+    'ped' => $pdo->query("SELECT COUNT(*) FROM marcacao_mentoria WHERE status='requested'")->fetchColumn(),
+    'bolsas' => $pdo->query("SELECT COUNT(*) FROM bolsa WHERE status='published'")->fetchColumn(),
+    'serv' => $pdo->query("SELECT COUNT(*) FROM servico_mentoria WHERE status='published'")->fetchColumn(),
     'ment' => $pdo->query("SELECT COUNT(*) FROM users WHERE role='mentor' AND account_status='approved'")->fetchColumn(),
     'ment_pend' => $pdo->query("SELECT COUNT(*) FROM users WHERE role='mentor' AND account_status='pending'")->fetchColumn(),
 ];
