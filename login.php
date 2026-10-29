@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: acesso.php'); exit;
     }
 }
-require 'includes/header.php'; ?>
+require_once __DIR__ . '/header.php'; ?>
 <style>.perfil-opcoes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 4px}.perfil-opcoes label{cursor:pointer}.perfil-opcoes input{position:absolute;opacity:0;pointer-events:none}.perfil-opcoes span{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;border:1px solid #d8e2e8;border-radius:12px;background:#fff;font-size:13px;font-weight:700;text-align:center;color:var(--muted)}.perfil-opcoes span b{font-size:22px;font-weight:400}.perfil-opcoes input:checked+span{border-color:var(--green);background:var(--mint);color:var(--green2);box-shadow:0 0 0 3px #13856b18}.perfil-opcoes input:focus-visible+span{outline:2px solid var(--green);outline-offset:2px}@media(max-width:420px){.perfil-opcoes{grid-template-columns:1fr}}</style>
 <section class="form-card"><h1>Bem-vindo de volta</h1><p class="muted">Escolhe como queres entrar.</p>
 <?php if ($error): ?><div class="alert error"><?=e($error)?></div><?php endif; ?>

@@ -18,7 +18,7 @@ $st = $pdo->prepare('SELECT b.id,b.status,b.session_date,b.message,u.name AS alu
 $st->execute([$uid]);
 $lista = $st->fetchAll();
 $page_title = 'Pedidos recebidos | Mentor';
-require 'includes/header.php'; ?>
+require_once __DIR__ . '/header.php'; ?>
 <div class="page-heading"><span class="eyebrow" style="color:var(--green)">Área do mentor</span><h1>Pedidos recebidos</h1><p>Sessões pedidas pelos estudantes para os teus serviços.</p></div>
 <?php perfil_nav('mentor', 'mentor_pedidos.php'); ?>
 <?php if ($lista): ?><div class="table-wrap"><table><thead><tr><th>Estudante</th><th>Contacto</th><th>Serviço</th><th>Data pretendida</th><th>Mensagem</th><th>Estado</th></tr></thead><tbody>

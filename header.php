@@ -1,4 +1,4 @@
-<
+
 <?php
 $page_title = $page_title ?? 'Kuntima | Bolsas & Mentoria';
 $flash = take_flash();
