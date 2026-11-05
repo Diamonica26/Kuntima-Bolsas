@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php'; require_once 'includes/perfis.php';
+require_once 'config.php'; require_once__DIR__ . '/perfis.php';
 require_mentor();
 $pdo = db(); $uid = (int)$_SESSION['user']['id'];
 $estados = ['requested' => 'Pendente', 'confirmed' => 'Confirmada', 'completed' => 'Concluída', 'cancelled' => 'Cancelada'];
@@ -25,4 +25,4 @@ require_once __DIR__ . '/header.php'; ?>
 <?php foreach ($lista as $b): ?><tr><td><?=e($b['aluno'])?></td><td><?=e($b['email'])?><?=$b['phone'] ? '<br>' . e($b['phone']) : ''?></td><td><?=e($b['title'])?></td><td><?=e(date('d/m/Y H:i', strtotime($b['session_date'])))?></td><td><?=e($b['message'] ?: '—')?></td>
 <td><form method="post" class="inline-form"><input type="hidden" name="csrf" value="<?=e(csrf_token())?>"><input type="hidden" name="id" value="<?=(int)$b['id']?>"><select name="status" aria-label="Estado do pedido"><?php foreach ($estados as $k => $r): ?><option value="<?=e($k)?>" <?=$b['status'] === $k ? 'selected' : ''?>><?=e($r)?></option><?php endforeach; ?></select> <button class="btn-small">Guardar</button></form></td></tr><?php endforeach; ?>
 </tbody></table></div><?php else: ?><div class="empty">Ainda não recebeste pedidos. Quando um estudante solicitar um dos teus serviços, aparece aqui.</div><?php endif; ?>
-<?php require 'includes/footer.php'; ?>
+<?php require__DIR__ . '/footer.php'; ?>

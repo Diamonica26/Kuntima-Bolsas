@@ -49,4 +49,4 @@ require_once __DIR__ . '/header.php'; ?>
 <div class="field"><label for="password">Palavra-passe</label><input id="password" name="password" type="password" minlength="8" required autocomplete="new-password"></div>
 <button class="btn-primary" type="submit">Criar conta gratuita</button></form>
 <div class="form-foot">Já tens conta? <a href="login.php">Entrar</a></div></section>
-<?php require 'includes/footer.php'; ?>
+<?php require__DIR__ . '/footer.php'; ?>

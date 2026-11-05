@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php'; require_once 'includes/perfis.php';
+require_once 'config.php'; require_once__DIR__ . '/perfis.php';
 require_admin();
 $pdo = db();
 $mentores = $pdo->query("SELECT id,name FROM users WHERE role='mentor' ORDER BY name")->fetchAll();
@@ -34,7 +34,7 @@ if (!isset($form)) {
 }
 $lista = $pdo->query('SELECT m.*,u.name AS mentor FROM servico_mentoria m LEFT JOIN users u ON u.id=m.mentor_id ORDER BY m.created_at DESC')->fetchAll();
 $page_title = 'Serviços de mentoria | Administração';
-require 'includes/header.php'; ?>
+require__DIR__ . '/header.php'; ?>
 <div class="page-heading"><span class="eyebrow" style="color:var(--green)">Administração</span><h1>Serviços de mentoria</h1><p>Cria serviços e atribui-os a mentores. Um serviço sem mentor fica à responsabilidade da equipa.</p></div>
 <?php perfil_nav('admin', 'admin_servicos.php'); ?>
 <section class="card form-wide">
@@ -51,4 +51,4 @@ require 'includes/header.php'; ?>
 <?php if ($lista): ?><div class="table-wrap"><table><thead><tr><th>Serviço</th><th>Mentor</th><th>Preço</th><th>Duração</th><th>Estado</th><th></th></tr></thead><tbody>
 <?php foreach ($lista as $s): ?><tr><td><?=e($s['title'])?></td><td><?=e($s['mentor'] ?? 'Sem mentor')?></td><td><?=e(kz($s['price']))?></td><td><?=e($s['duration_minutes'])?> min</td><td><span class="status <?=$s['status'] === 'published' ? 'approved' : 'pending'?>"><?=$s['status'] === 'published' ? 'Publicado' : 'Rascunho'?></span></td><td><a class="text-link" href="admin_servicos.php?editar=<?=(int)$s['id']?>#title">Editar</a></td></tr><?php endforeach; ?>
 </tbody></table></div><?php else: ?><div class="empty">Ainda não existem serviços.</div><?php endif; ?></section>
-<?php require 'includes/footer.php'; ?>
+<?php require__DIR__ . '/footer.php'; ?>

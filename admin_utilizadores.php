@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php'; require_once 'includes/perfis.php';
+require_once 'config.php'; require_once__DIR__ . '/perfis.php';
 require_admin();
 $pdo = db();
 $perfis = ['student' => 'Estudante', 'mentor' => 'Mentor', 'admin' => 'Administrador'];
@@ -39,7 +39,7 @@ else { $filtro = ''; }
 $st = $pdo->prepare($sql . ' ORDER BY (account_status=\'pending\') DESC, created_at DESC'); $st->execute($args);
 $lista = $st->fetchAll();
 $page_title = 'Utilizadores | Administração';
-require 'includes/header.php'; ?>
+require__DIR__ . '/header.php'; ?>
 <div class="page-heading"><span class="eyebrow" style="color:var(--green)">Administração</span><h1>Utilizadores</h1><p>Os mentores registam-se sozinhos mas só podem entrar depois de aprovados por ti.</p></div>
 <?php perfil_nav('admin', 'admin_utilizadores.php'); ?>
 <form class="filters" method="get"><select name="f" aria-label="Filtrar"><option value="">Todos os perfis</option><option value="pendentes" <?=$filtro === 'pendentes' ? 'selected' : ''?>>Mentores a aguardar aprovação</option><?php foreach ($perfis as $k => $r): ?><option value="<?=e($k)?>" <?=$filtro === $k ? 'selected' : ''?>><?=e($r)?></option><?php endforeach; ?></select><button class="btn-primary" type="submit">Filtrar</button></form>
@@ -50,4 +50,4 @@ require 'includes/header.php'; ?>
 <?php if ($u['account_status'] !== 'approved'): ?><form method="post" class="inline-form"><input type="hidden" name="csrf" value="<?=e(csrf_token())?>"><input type="hidden" name="acao" value="aprovacao"><input type="hidden" name="id" value="<?=(int)$u['id']?>"><input type="hidden" name="f" value="<?=e($filtro)?>"><button class="btn-small" name="decisao" value="approved">Aprovar</button></form><?php endif; ?>
 <?php if ($u['account_status'] !== 'rejected'): ?><form method="post" class="inline-form"><input type="hidden" name="csrf" value="<?=e(csrf_token())?>"><input type="hidden" name="acao" value="aprovacao"><input type="hidden" name="id" value="<?=(int)$u['id']?>"><input type="hidden" name="f" value="<?=e($filtro)?>"><button class="btn-small" name="decisao" value="rejected" data-confirm="Rejeitar este mentor? Os serviços dele deixam de estar publicados.">Rejeitar</button></form><?php endif; ?><?php endif; ?></td></tr><?php endforeach; ?>
 </tbody></table></div><?php else: ?><div class="empty"><?=$filtro === 'pendentes' ? 'Não há mentores a aguardar aprovação.' : 'Nenhum utilizador encontrado.'?></div><?php endif; ?>
-<?php require 'includes/footer.php'; ?>
+<?php require__DIR__ . '/footer.php'; ?>

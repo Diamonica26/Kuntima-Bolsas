@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php'; require_once 'includes/perfis.php';
+require_once 'config.php'; require_once__DIR__ . '/perfis.php';
 require_mentor();
 $pdo = db(); $uid = (int)$_SESSION['user']['id'];
 
@@ -47,4 +47,4 @@ require_once __DIR__ . '/header.php'; ?>
 <?php if ($lista): ?><div class="table-wrap"><table><thead><tr><th>Serviço</th><th>Categoria</th><th>Preço</th><th>Duração</th><th>Estado</th><th></th></tr></thead><tbody>
 <?php foreach ($lista as $s): ?><tr><td><?=e($s['title'])?></td><td><?=e($s['category'])?></td><td><?=e(kz($s['price']))?></td><td><?=e($s['duration_minutes'])?> min</td><td><span class="status <?=$s['status'] === 'published' ? 'approved' : 'pending'?>"><?=$s['status'] === 'published' ? 'Publicado' : 'Rascunho'?></span></td><td><a class="text-link" href="mentor_servicos.php?editar=<?=(int)$s['id']?>#title">Editar</a></td></tr><?php endforeach; ?>
 </tbody></table></div><?php else: ?><div class="empty">Ainda não criaste serviços. Usa o formulário acima.</div><?php endif; ?></section>
-<?php <?php require_once __DIR__ . '/footer.php'; ?>
+<?php require_once __DIR__ . '/footer.php'; ?>

@@ -38,4 +38,4 @@ require_once __DIR__ . '/header.php'; ?>
 <div class="field"><label for="password">Palavra-passe</label><input id="password" name="password" type="password" required autocomplete="current-password"></div>
 <button class="btn-primary" type="submit">Entrar</button></form>
 <div class="form-foot">Ainda não tens conta? <a href="registar.php">Criar conta</a></div></section>
-<?php require 'includes/footer.php'; ?>
+<?php require__DIR__ . '/footer.php'; ?>

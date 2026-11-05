@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php'; require_once 'includes/perfis.php';
+require_once 'config.php'; require_once__DIR__ . '/perfis.php';
 require_admin();
 $pdo = db();
 $tipos = ['Integral', 'Parcial', 'Propina', 'Investigação'];
@@ -54,7 +54,7 @@ if (!isset($form)) {
 }
 $lista = $pdo->query('SELECT id,title,organization,deadline,status FROM bolsa ORDER BY created_at DESC')->fetchAll();
 $page_title = 'Bolsas | Administração';
-require 'includes/header.php'; ?>
+require__DIR__ . '/header.php' ?>
 <div class="page-heading"><span class="eyebrow" style="color:var(--green)">Administração</span><h1>Bolsas de estudo</h1><p>Publica novas oportunidades e controla o que fica visível para os estudantes.</p></div>
 <?php perfil_nav('admin', 'admin_bolsas.php'); ?>
 <section class="card form-wide">
@@ -84,4 +84,4 @@ require 'includes/header.php'; ?>
 <td><form method="post" class="inline-form"><input type="hidden" name="csrf" value="<?=e(csrf_token())?>"><input type="hidden" name="acao" value="estado"><input type="hidden" name="id" value="<?=(int)$b['id']?>"><select name="status" aria-label="Estado da bolsa"><?php foreach ($estados as $k => $r): ?><option value="<?=e($k)?>" <?=$b['status'] === $k ? 'selected' : ''?>><?=e($r)?></option><?php endforeach; ?></select> <button class="btn-small">Guardar</button></form></td>
 <td><a class="text-link" href="admin_bolsas.php?editar=<?=(int)$b['id']?>#title">Editar</a> <?php if ($b["status"] === "published"): ?>· <a class="text-link" href="bolsa.php?id=<?=(int)$b["id"]?>">Ver</a><?php endif; ?></td></tr><?php endforeach; ?>
 </tbody></table></div><?php else: ?><div class="empty">Ainda não existem bolsas.</div><?php endif; ?></section>
-<?php require 'includes/footer.php'; ?>
+<?php require__DIR__ . '/footer.php' ?>

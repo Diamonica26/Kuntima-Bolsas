@@ -1,6 +1,6 @@
 <?php
 // Funções partilhadas pelas áreas de administrador e mentor (ficheiro novo, não altera o config.php).
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 
 function require_mentor(): void {
     require_login();
